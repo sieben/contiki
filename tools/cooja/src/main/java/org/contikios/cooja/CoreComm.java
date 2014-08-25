@@ -238,7 +238,7 @@ public abstract class CoreComm {
           "org/contikios/cooja/corecomm/" + className + ".java",
           "-cp",
           Cooja.getExternalToolsSetting("PATH_CONTIKI")
-              + "/tools/cooja/dist/cooja.jar" };
+              + "/tools/cooja/build/libs/cooja.jar" };
 
       p = Runtime.getRuntime().exec(cmd, null, null);
 

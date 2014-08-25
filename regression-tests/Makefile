@@ -43,9 +43,9 @@ summary-%:
 clean:
 	rm -f $(SUMMARIES)
 
-cooja: $(CONTIKI)/tools/cooja/dist/cooja.jar
-$(CONTIKI)/tools/cooja/dist/cooja.jar:
-	(cd $(CONTIKI)/tools/cooja; ant jar)
+cooja: $(CONTIKI)/tools/cooja/build/libs/cooja.jar
+$(CONTIKI)/tools/cooja/build/libs/cooja.jar:
+	(cd $(CONTIKI)/tools/cooja; gradle build)
 
 scan-build:
 	cd scan_build && scan-build $(MAKE)

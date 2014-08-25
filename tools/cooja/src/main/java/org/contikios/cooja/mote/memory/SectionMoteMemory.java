@@ -28,12 +28,12 @@
 
 package org.contikios.cooja.mote.memory;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
 
 /**
  * Represents a mote memory consisting of non-overlapping memory sections with
