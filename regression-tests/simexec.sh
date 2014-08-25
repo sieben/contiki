@@ -15,11 +15,26 @@ shift
 
 #set -x
 
-while (( "$#" )); do
-	RANDOMSEED=$1
-	echo -n "Running test $BASENAME with random Seed $RANDOMSEED: "
+echo -n "Running test $BASENAME "
 
-	java -Xshare:on -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI -random-seed=$RANDOMSEED > $BASENAME.log &
+java -Xshare:on -jar $CONTIKI/tools/cooja/build/libs/cooja.jar -nogui=$CSC -contiki=$CONTIKI -random-seed=$RANDOMSEED > $BASENAME.log &
+JPID=$!
+
+# Copy the log and only print "." if it changed
+touch $BASENAME.log.prog
+while kill -0 $JPID 2> /dev/null
+do
+  sleep 1
+  diff $BASENAME.log $BASENAME.log.prog > /dev/null
+  if [ $? -ne 0 ] 
+  then
+    echo -n "."
+    cp $BASENAME.log $BASENAME.log.prog
+  fi
+done
+rm $BASENAME.log.prog
+
+	java -Xshare:on -jar $CONTIKI/tools/cooja/build/libs/cooja.jar -nogui=$CSC -contiki=$CONTIKI -random-seed=$RANDOMSEED > $BASENAME.log &
 	JPID=$!
 
 	# Copy the log and only print "." if it changed

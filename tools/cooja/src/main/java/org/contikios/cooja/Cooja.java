@@ -414,7 +414,7 @@ public class Cooja extends Observable {
         currentProjects.add(new COOJAProject(projectDir));
       }
     }
-    
+
     //Scan for projects
     String searchProjectDirs = getExternalToolsSetting("PATH_APPSEARCH", null);
     if (searchProjectDirs != null && searchProjectDirs.length() > 0) {
@@ -2688,7 +2688,7 @@ public class Cooja extends Observable {
   public void doQuit(boolean askForConfirmation) {
     doQuit(askForConfirmation, 0);
   }
-  
+
   public void doQuit(boolean askForConfirmation, int exitCode) {
     if (isVisualizedInApplet()) {
       return;
@@ -3036,6 +3036,9 @@ public class Cooja extends Observable {
     if (!fp.exists()) {
       fp = new File(projectDir, "lib/" + jarfile);
     }
+    if (!fp.exists()) {
+      fp = new File(projectDir, "build/libs/" + jarfile);
+    }
     return fp.exists() ? fp : null;
   }
 
@@ -3132,8 +3135,8 @@ public class Cooja extends Observable {
   public static void main(String[] args) {
     String logConfigFile = null;
     Long randomSeed = null;
-    
-    
+
+
     for (String element : args) {
       if (element.startsWith("-log4j=")) {
         String arg = element.substring("-log4j=".length());
@@ -3191,10 +3194,10 @@ public class Cooja extends Observable {
           Cooja.externalToolsUserSettingsFileReadOnly = true;
         }
       }
-      
+
       if (element.startsWith("-random-seed=")) {
         String arg = element.substring("-random-seed=".length());
-        try {          
+        try {
           randomSeed =  Long.valueOf(arg);
         } catch (Exception e) {
           logger.error("Failed to convert \"" + arg +"\" to an integer.");
@@ -3229,7 +3232,7 @@ public class Cooja extends Observable {
       if (sim == null) {
         System.exit(1);
       }
-      
+
 
     } else if (args.length > 0 && args[0].startsWith("-nogui=")) {
 
@@ -3275,8 +3278,9 @@ public class Cooja extends Observable {
         }
       }
 
+      sim.setSpeedLimit(null);
+      sim.startSimulation();
 
-      
     } else if (args.length > 0 && args[0].startsWith("-applet")) {
 
       String tmpWebPath=null, tmpBuildPath=null, tmpEsbFirmware=null, tmpSkyFirmware=null;
@@ -4177,7 +4181,7 @@ public class Cooja extends Observable {
 	  {"[COOJA_DIR]","PATH_COOJA","/tools/cooja"},
 	  {"[APPS_DIR]","PATH_APPS","/tools/cooja/apps"}
   };
-  
+
   private File createContikiRelativePath(File file) {
     try {
     	int elem = PATH_IDENTIFIER.length;
@@ -4186,32 +4190,32 @@ public class Cooja extends Observable {
     	int match = -1;
     	int mlength = 0;
     	String fileCanonical = file.getCanonicalPath();
-      
+
     	//No so nice, but goes along with GUI.getExternalToolsSetting
     	String defp = Cooja.getExternalToolsSetting("PATH_CONTIKI", null);
-    	
-    	
+
+
 		for(int i = 0; i < elem; i++){
-			path[i] = new File(Cooja.getExternalToolsSetting(PATH_IDENTIFIER[i][1], defp + PATH_IDENTIFIER[i][2]));			
+			path[i] = new File(Cooja.getExternalToolsSetting(PATH_IDENTIFIER[i][1], defp + PATH_IDENTIFIER[i][2]));
 			canonicals[i] = path[i].getCanonicalPath();
 			if (fileCanonical.startsWith(canonicals[i])){
 				if(mlength < canonicals[i].length()){
 					mlength = canonicals[i].length();
 					match = i;
 				}
- 
+
 	    	}
 		}
-      
+
 	    if(match == -1) return null;
 
 
 	    /* Replace Contiki's canonical path with Contiki identifier */
         String portablePath = fileCanonical.replaceFirst(
-          java.util.regex.Matcher.quoteReplacement(canonicals[match]), 
+          java.util.regex.Matcher.quoteReplacement(canonicals[match]),
           java.util.regex.Matcher.quoteReplacement(PATH_IDENTIFIER[match][0]));
         File portable = new File(portablePath);
-      
+
         /* Verify conversion */
         File verify = restoreContikiRelativePath(portable);
         if (verify == null || !verify.exists()) {
@@ -4225,43 +4229,43 @@ public class Cooja extends Observable {
       return null;
     }
   }
-  
-  
+
+
   private File restoreContikiRelativePath(File portable) {
   	int elem = PATH_IDENTIFIER.length;
   	File path = null;
 	String canonical = null;
-	
+
     try {
-    	    	
+
     	String portablePath = portable.getPath();
-    	
+
         int i = 0;
         //logger.info("PPATH: " + portablePath);
-        
+
     	for(; i < elem; i++){
     		if (portablePath.startsWith(PATH_IDENTIFIER[i][0])) break;
-    		
+
     	}
-    	
-    	
+
+
     	if(i == elem) return null;
     	//logger.info("Found: " + PATH_IDENTIFIER[i][0]);
-    	
+
     	//No so nice, but goes along with GUI.getExternalToolsSetting
     	String defp = Cooja.getExternalToolsSetting("PATH_CONTIKI", null);
     	path = new File(Cooja.getExternalToolsSetting(PATH_IDENTIFIER[i][1], defp + PATH_IDENTIFIER[i][2]));
-    	
+
     	//logger.info("Config: " + PATH_IDENTIFIER[i][1] + ", " + defp + PATH_IDENTIFIER[i][2] + " = " + path.toString());
 		canonical = path.getCanonicalPath();
-    	
-		
+
+
     	File absolute = new File(portablePath.replace(PATH_IDENTIFIER[i][0], canonical));
 		if(!absolute.exists()){
 			logger.warn("Replaced " + portable  + " with " + absolute.toString() + " (default: "+ defp + PATH_IDENTIFIER[i][2] +"), but could not find it. This does not have to be an error, as the file might be created later.");
 		}
-    	     
-      
+
+
     	return absolute;
     } catch (IOException e) {
     	return null;

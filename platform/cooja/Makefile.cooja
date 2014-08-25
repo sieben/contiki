@@ -20,15 +20,15 @@ endif
 ifdef QUICKSTART
 
 # Create COOJA JAR rule
-$(CONTIKI)/tools/cooja/dist/cooja.jar:
+$(CONTIKI)/tools/cooja/build/libs/cooja.jar:
 	@echo "Creating COOJA Java archive..."
-	(cd $(CONTIKI)/tools/cooja && ant jar)
+	(cd $(CONTIKI)/tools/cooja && gradle jar)
 
 # Quickstart rule
 ifneq ($(MAKECMDGOALS),clean)
 .PHONY: $(MAKECMDGOALS)
 .PRECIOUS: $(MAKECMDGOALS)
-$(MAKECMDGOALS): $(CONTIKI)/tools/cooja/dist/cooja.jar
+$(MAKECMDGOALS): $(CONTIKI)/tools/cooja/build/libs/cooja.jar
 	 java -mx512m -jar $< -quickstart='$(firstword $(MAKECMDGOALS))' -contiki='$(CONTIKI)'
 endif
 

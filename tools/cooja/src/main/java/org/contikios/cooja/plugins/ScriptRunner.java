@@ -459,12 +459,12 @@ public class ScriptRunner extends VisPlugin {
       File coojaJAR;
       try {
         coojaBuild = new File(Cooja.getExternalToolsSetting("PATH_CONTIKI"), "tools/cooja/build");
-        coojaJAR = new File(Cooja.getExternalToolsSetting("PATH_CONTIKI"), "tools/cooja/dist/cooja.jar");
+        coojaJAR = new File(Cooja.getExternalToolsSetting("PATH_CONTIKI"), "tools/cooja/build/libs/cooja.jar");
         coojaBuild = coojaBuild.getCanonicalFile();
         coojaJAR = coojaJAR.getCanonicalFile();
       } catch (IOException e) {
         coojaBuild = new File(Cooja.getExternalToolsSetting("PATH_CONTIKI"), "tools/cooja/build");
-        coojaJAR = new File(Cooja.getExternalToolsSetting("PATH_CONTIKI"), "tools/cooja/dist/cooja.jar");
+        coojaJAR = new File(Cooja.getExternalToolsSetting("PATH_CONTIKI"), "tools/cooja/build/libs/cooja.jar");
       }
 
       if (!coojaJAR.exists()) {
@@ -482,7 +482,7 @@ public class ScriptRunner extends VisPlugin {
           "java",
           "-Djava.awt.headless=true",
           "-jar",
-          "../dist/cooja.jar",
+          "../build/libs/cooja.jar",
           "-nogui=" + configFile.getAbsolutePath()
       };
 
