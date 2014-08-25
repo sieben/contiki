@@ -2,7 +2,7 @@
 
 <project name="COOJA App mote example: Rime's ABC" default="compile" basedir=".">
   <property name="cooja" location="../.."/>
-  <property name="cooja_jar" value="${cooja}/dist/cooja.jar"/>
+  <property name="cooja_jar" value="${cooja}/build/libs/cooja.jar"/>
 
   <target name="init">
     <tstamp/>

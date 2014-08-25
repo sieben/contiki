@@ -4,7 +4,7 @@
   <property name="java" location="java"/>
   <property name="build" location="build"/>
   <property name="lib" location="lib"/>
-  <property name="cooja_jar" value="../../dist/cooja.jar"/>
+  <property name="cooja_jar" value="../../build/libs/cooja.jar"/>
 
   <target name="help">
     <echo>
