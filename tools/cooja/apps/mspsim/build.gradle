@@ -1,24 +1,26 @@
 apply plugin: "java"
 
+task buildMspsimJar(type: Exec) {
+    environment System.getenv()
+    workingDir '../../../mspsim/'
+    commandLine 'sh', '-c', 'ant jar'
+}
 task buildCoffeeJar(type: Exec) {
     environment System.getenv()
     workingDir '../../../coffee-manager/'
     commandLine 'sh', '-c', 'ant jar'
 }
-task copyMspsimJar(type: Copy) {
-    from '../../../mspsim/'
-    into 'build/libs/'
-    include 'mspsim.jar'
+task copyMspsimJar(type: Exec, dependsOn: buildMspsimJar) {
+    environment System.getenv()
+    commandLine 'sh', '-c', 'mkdir -p build/libs && cp ../../../mspsim/mspsim.jar build/libs'
 }
-task copyJipv6Jar(type: Copy) {
-    from '../../../mspsim/lib'
-    into 'build/libs/'
-    include 'jipv6.jar'
+task copyJipv6Jar(type: Exec) {
+    environment System.getenv()
+    commandLine 'sh', '-c', 'mkdir -p build/libs && cp ../../../mspsim/lib/jipv6.jar build/libs'
 }
-task copyCoffeeJar(type: Copy, dependsOn: buildCoffeeJar) {
-    from '../../../coffee-manager/'
-    into 'build//libs/'
-    include 'coffee.jar'
+task copyCoffeeJar(type: Exec, dependsOn: buildCoffeeJar) {
+    environment System.getenv()
+    commandLine 'sh', '-c', 'mkdir -p build/libs && cp ../../../coffee-manager/coffee.jar build/libs'
 }
 compileJava.dependsOn copyMspsimJar
 compileJava.dependsOn copyCoffeeJar
