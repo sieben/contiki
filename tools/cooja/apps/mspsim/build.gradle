@@ -1,13 +1,5 @@
 apply plugin: "java"
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src'
-        }
-    }
-}
-
 task buildCoffeeJar(type: Exec) {
     environment System.getenv()
     workingDir '../../../coffee-manager/'
@@ -34,16 +26,13 @@ compileJava.dependsOn copyJipv6Jar
 
 repositories {
     mavenCentral()
+   flatDir {
+       dirs 'build/libs'
+   }
 }
 
 jar {
     archiveName = "cooja_mspsim.jar"
-}
-
-repositories {
-   flatDir {
-       dirs 'build/libs'
-   }
 }
 
 dependencies {
