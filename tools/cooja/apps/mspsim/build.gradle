@@ -1,5 +1,13 @@
 apply plugin: "java"
 
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+}
+
 task buildMspsimJar(type: Exec) {
     environment System.getenv()
     workingDir '../../../mspsim/'
