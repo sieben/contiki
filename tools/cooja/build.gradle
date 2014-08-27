@@ -29,60 +29,60 @@ jar {
 }
 
 run {
-    println workingDir
-        // fork="yes"
-        maxHeapSize "512m"
-        main = "org.contikios.cooja.Cooja"
-        workingDir = "build"
+    maxHeapSize "512m"
+    main = "org.contikios.cooja.Cooja"
+    workingDir = "build"
 }
 
 task run_64(dependsOn: jar, type: JavaExec) {
     description = "Will run the cooja simulator for 64 architecture"
-        // fork: yes
-        main = "org.contikios.cooja.Cooja"
-        maxHeapSize = "512m"
-        systemProperty "user.language", "en"
-        //jvmArgs "-d64", "-XX:+ShowMessageBoxOnError"
+    main = "org.contikios.cooja.Cooja"
+    workingDir = "build"
+    maxHeapSize = "512m"
+    systemProperty "user.language", "en"
+    jvmArgs "-d64", "-XX:+ShowMessageBoxOnError"
 }
 
 task run_errorbox(dependsOn: jar, type: JavaExec) {
-    // fork: yes
+    description = ""
     main = "org.contikios.cooja.Cooja"
-        maxHeapSize = "512m"
-        systemProperty "user.language", "en"
-        //    <java fork="yes" dir="${build}">
-        //      <jvmarg value="-XX:+ShowMessageBoxOnError"/>
-        //      <env key="LD_LIBRARY_PATH" value="."/>
-        //    </java>
+    workingDir = "build"
+    maxHeapSize = "512m"
+    systemProperty "user.language", "en"
+    jvmArgs "-XX:+ShowMessageBoxOnError"
 }
 
 task runprof(dependsOn: jar, type: JavaExec) {
-    // fork: yes
+    description = ""
     main = "org.contikios.cooja.Cooja"
-        jvmArgs "-agentlib:yjpagent"
+    workingDir = "build"
+    jvmArgs "-agentlib:yjpagent"
 }
 
 task runfree(dependsOn: jar, type: JavaExec) {
-    // fork: yes
+    description = ""
     main = "org.contikios.cooja.Cooja"
-        maxHeapSize = "1536m"
-        // <arg line="${args}"/>
+    workingDir = "build"
+    maxHeapSize = "1536m"
 }
 
 task run_bigmem(dependsOn: jar, type: JavaExec) {
-    // fork: yes
+    description = "Run the simulation with a larger Java memory heap"
     main = "org.contikios.cooja.Cooja"
-        maxHeapSize = "1536m"
+    workingDir = "build"
+    maxHeapSize = "1536m"
 }
 
 task run_nogui(dependsOn: jar, type: JavaExec) {
-    // fork: yes
+    description = "Run the simulation without graphical interface"
     // <arg line="-nogui=${args}"/>
     main = "org.contikios.cooja.Cooja"
-        maxHeapSize = "512m"
+    workingDir = "build"
+    maxHeapSize = "512m"
 }
 
 task run_applet(dependsOn: jar, type: JavaExec) {
+    description = "Run the simulation as an applet"
     //    <exec executable="appletviewer" dir="${build}">
     //      <arg value="-J-Djava.security.policy=cooja.policy"/>
     //      <arg value="cooja.html"/>
@@ -91,9 +91,10 @@ task run_applet(dependsOn: jar, type: JavaExec) {
 }
 
 task export_jar(dependsOn: jar, type: JavaExec) {
-    // fork: yes
+    description = "Export the complete simulation in a single JAR"
     maxHeapSize "512m"
-        main "org.contikios.cooja.util.ExecuteJAR"
-        //        <arg file="${CSC}"/>
-        //        <arg file="exported.jar"/>
+    main "org.contikios.cooja.util.ExecuteJAR"
+    workingDir = "build"
+    // <arg file="${CSC}"/>
+    // <arg file="exported.jar"/>
 }
