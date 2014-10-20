@@ -17,6 +17,7 @@ dependencies {
     compile 'log4j:log4j:1.2.16'
         compile 'de.sciss:jsyntaxpane:1.0.0'
         compile 'org.jdom:jdom:1.1'
+        compile 'org.swinglabs.swingx:swingx-all:1.6.4'
 }
 
 mainClassName = "org.contikios.cooja.Cooja"

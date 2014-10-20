@@ -34,7 +34,7 @@ do
 done
 rm $BASENAME.log.prog
 
-	java -Xshare:on -jar $CONTIKI/tools/cooja/dist/cooja.jar -nogui=$CSC -contiki=$CONTIKI -random-seed=$RANDOMSEED > $BASENAME.log &
+	java -Xshare:on -jar $CONTIKI/tools/cooja/build/libs/cooja.jar -nogui=$CSC -contiki=$CONTIKI -random-seed=$RANDOMSEED > $BASENAME.log &
 	JPID=$!
 
 	# Copy the log and only print "." if it changed
