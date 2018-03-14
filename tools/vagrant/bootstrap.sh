@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
+# i386 binary support on x64 system
+sudo dpkg --add-architecture i386
+sudo apt update
+sudo apt install -y --no-install-recommends \
+  libc6:i386 libstdc++6:i386 libncurses5:i386
+
 # Tools
-sudo apt-get update
 sudo apt-get install -y --no-install-recommends \
   build-essential doxygen git wget unzip python-serial \
   default-jdk ant srecord python-pip iputils-tracepath uncrustify python-magic
