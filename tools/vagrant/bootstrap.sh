@@ -55,6 +55,7 @@ echo "export ENV CONTIKI_NG=${HOME}/contiki-ng" >> ${HOME}/.bashrc
 echo "export COOJA=${CONTIKI_NG}/tools/cooja" >> ${HOME}/.bashrc
 echo "export PATH=${HOME}:${PATH}" >> ${HOME}/.bashrc
 echo "export WORKDIR=${HOME}" >> ${HOME}/.bashrc
+source ${HOME}/.bashrc
 
 # Create Cooja shortcut
 echo "#!/bin/bash\nant -Dbasedir=${COOJA} -f ${COOJA}/build.xml run" > ${HOME}/cooja && chmod +x ${HOME}/cooja
@@ -71,8 +72,8 @@ sudo sh get-docker.sh
 sudo usermod -aG docker vagrant
 
 # Init submodule
-(cd ${CONTIKI_NG}; git submodule update --init)
+(cd ${CONTIKI_NG}; git submodule update --init --recursive)
 
-# Contiki alias
-echo 'alias contiker="docker run --privileged -v $CNG_PATH:/home/vagrant/contiki-ng -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /dev/bus/usb:/dev/bus/usb -ti simonduq/contiki-ng"' >> /home/vagrant/.bashrc
-
+# Docker image "Contiker" alias
+echo 'alias contiker="docker run --privileged --mount type=bind,source=$CNG_PATH,destination=/home/user/contiki-ng -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /dev/bus/usb:/dev/bus/usb -ti simonduq/contiki-ng"' >> /home/vagrant/.bashrc
+source ${HOME}/.bashrc
